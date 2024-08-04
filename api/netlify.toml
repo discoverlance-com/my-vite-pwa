@@ -1,0 +1,3 @@
+[build]
+command = "deno run --lock=lock.json --allow-net --allow-env server.ts"
+publish = "."
