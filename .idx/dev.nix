@@ -6,6 +6,7 @@
   # Use https://search.nixos.org/packages to find packages
   packages = [
     pkgs.nodejs_20
+    pkgs.deno
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -13,6 +14,11 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       # "vscodevim.vim"
+      "esbenp.prettier-vscode"
+      "denoland.vscode-deno"
+      "rangav.vscode-thunder-client"
+      "formulahendry.auto-rename-tag"
+      "formulahendry.auto-close-tag"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
