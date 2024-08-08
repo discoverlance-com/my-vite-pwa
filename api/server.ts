@@ -2,6 +2,18 @@ import { matchRoute } from './routes.ts'
 import { getRequestUser, asyncLocalStorage } from './utils.ts'
 
 async function handler(request: Request): Promise<Response> {
+	// Handle preflight requests
+	if (request.method === 'OPTIONS') {
+		return new Response(null, {
+			status: 204,
+			headers: {
+				'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+				'Access-Control-Allow-Credentials': 'true',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-User',
+			},
+		})
+	}
+
 	const user = getRequestUser(request)
 
 	// authenticate user
@@ -10,6 +22,9 @@ async function handler(request: Request): Promise<Response> {
 			status: 401,
 			headers: {
 				'Content-Type': 'application/json',
+				'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+				'Access-Control-Allow-Credentials': 'true',
+				'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-User',
 			},
 		})
 	}
@@ -32,14 +47,6 @@ async function handler(request: Request): Promise<Response> {
 		'Content-Type, Authorization, X-User',
 	)
 	response.headers.set('Access-Control-Allow-Credentials', 'true')
-
-	// Handle preflight requests
-	if (request.method === 'OPTIONS') {
-		return new Response(null, {
-			status: 204,
-			headers: response.headers,
-		})
-	}
 
 	return response
 }
