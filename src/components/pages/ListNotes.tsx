@@ -85,7 +85,7 @@ export const ListNotes = () => {
 									<CardContent>
 										{/* trucate the note description text */}
 										<p>
-											{note.description.length > 100
+											{note.description?.length > 100
 												? note.description.slice(0, 100) + '...'
 												: note.description}
 										</p>
