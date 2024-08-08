@@ -25,7 +25,7 @@ function App() {
 	}, [])
 	return (
 		<ThemeProvider>
-			<div className="container">
+			<div className="container pb-16">
 				<div className="gap-4 flex flex-wrap justify-between items-center mt-4">
 					<h1 className="text-5xl font-bold text-center">My Notes</h1>
 					<CreateNote />
