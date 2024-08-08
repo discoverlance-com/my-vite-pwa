@@ -14,7 +14,7 @@ export default defineConfig({
 		VitePWA({
 			base: '/',
 			includeAssets: ['vite.svg'],
-			registerType: 'prompt',
+			registerType: 'autoUpdate',
 			devOptions: {
 				enabled: true,
 				type: 'module',

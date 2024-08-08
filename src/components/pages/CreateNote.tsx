@@ -26,6 +26,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { Loader2Icon } from 'lucide-react'
+import { useNotesStore } from '@/stores/notes'
 
 const formSchema = z
 	.object({
@@ -37,6 +38,7 @@ const formSchema = z
 	.required({ title: true, description: true })
 
 export const CreateNote = () => {
+	const { loadNotes } = useNotesStore()
 	const [open, setOpen] = useState(false)
 	const [userId] = useLocalStorage<string | null>('userId', null)
 
@@ -58,9 +60,10 @@ export const CreateNote = () => {
 					credentials: import.meta.env.PROD ? undefined : 'include',
 				},
 			)
-			setOpen(false)
 			form.reset()
-			window.location.reload()
+			setOpen(false)
+			// refetch the notes
+			loadNotes(userId!)
 		} catch (error) {
 			if (error instanceof HTTPError) {
 				const response = await error.response.json<{
