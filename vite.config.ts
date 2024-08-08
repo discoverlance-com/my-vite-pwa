@@ -1,11 +1,15 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
+import ImportMetaEnvPlugin from '@import-meta-env/unplugin'
 import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
+		ImportMetaEnvPlugin.vite({
+			example: '.env.example',
+		}),
 		react(),
 		VitePWA({
 			base: '/',

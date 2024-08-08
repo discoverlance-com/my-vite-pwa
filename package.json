@@ -33,6 +33,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@import-meta-env/unplugin": "^0.5.2",
     "@types/node": "^22.1.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
