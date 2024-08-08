@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import ky, { HTTPError } from 'ky'
 import { useLocalStorage } from 'usehooks-ts'
 import { toast } from 'sonner'
+import { useState } from 'react'
+import { Loader2Icon } from 'lucide-react'
 
 import {
 	Dialog,
@@ -13,7 +15,8 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from '@/components/ui/dialog'
-import { Button } from '../ui/button'
+import { Button } from '@/components/ui/button'
+import { Textarea } from '@/components/ui/textarea'
 import {
 	Form,
 	FormControl,
@@ -24,8 +27,6 @@ import {
 	FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useState } from 'react'
-import { Loader2Icon } from 'lucide-react'
 import { useNotesStore } from '@/stores/notes'
 
 const formSchema = z
@@ -125,7 +126,7 @@ export const CreateNote = () => {
 								<FormItem>
 									<FormLabel htmlFor="description">Description</FormLabel>
 									<FormControl>
-										<Input
+										<Textarea
 											id="description"
 											placeholder="i am goint to..."
 											{...field}

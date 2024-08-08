@@ -13,10 +13,22 @@ import { Skeleton } from '../ui/skeleton'
 import { toast } from 'sonner'
 import ky, { HTTPError } from 'ky'
 import { useLocalStorage } from 'usehooks-ts'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
 export const ListNotes = () => {
 	const { loading, notes, loadNotes } = useNotesStore()
+	const [openDialog, setOpenDialog] = useState(false)
 	const [userId] = useLocalStorage<string | null>('userId', null)
 
 	const deleteNote = useCallback(
@@ -81,12 +93,34 @@ export const ListNotes = () => {
 
 									<CardFooter className="justify-between">
 										<Button variant="outline">Edit</Button>
-										<Button
-											variant="destructive"
-											onClick={() => deleteNote(note.id)}
-										>
-											Delete
-										</Button>
+										<AlertDialog open={openDialog} onOpenChange={setOpenDialog}>
+											<AlertDialogTrigger asChild>
+												<Button variant="destructive">Delete</Button>
+											</AlertDialogTrigger>
+											<AlertDialogContent>
+												<AlertDialogHeader>
+													<AlertDialogTitle>
+														Are you absolutely sure?
+													</AlertDialogTitle>
+													<AlertDialogDescription>
+														This will delete the note{' '}
+														<strong>{note.title}</strong>
+													</AlertDialogDescription>
+												</AlertDialogHeader>
+												<AlertDialogFooter>
+													<AlertDialogCancel>Cancel</AlertDialogCancel>
+													<AlertDialogAction
+														onClick={async (e) => {
+															e.preventDefault()
+															await deleteNote(note.id)
+															setOpenDialog(false)
+														}}
+													>
+														Continue
+													</AlertDialogAction>
+												</AlertDialogFooter>
+											</AlertDialogContent>
+										</AlertDialog>
 									</CardFooter>
 								</Card>
 							</li>
