@@ -29,14 +29,16 @@ jobs:
           node-version: lts/*
 
       - name: Install step
-        run: "npm install"
+        run: 'npm install'
 
       - name: Build step
-        run: "npm run build"
+        env:
+          VITE_NOTES_API_URL: ${{ secrets.VITE_NOTES_API_URL }}
+        run: 'npm run build'
 
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "my-vite-pwa-website"
-          entrypoint: "https://deno.land/std@0.217.0/http/file_server.ts"
-          root: "dist"
+          project: 'my-vite-pwa-website'
+          entrypoint: 'https://deno.land/std@0.217.0/http/file_server.ts'
+          root: 'dist'
