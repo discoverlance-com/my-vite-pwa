@@ -5,6 +5,9 @@ on:
   pull_request:
     branches: main
 
+env:
+  VITE_NOTES_API_URL: ${{ secrets.VITE_NOTES_API_URL }}
+
 jobs:
   deploy:
     name: Deploy
@@ -32,8 +35,6 @@ jobs:
         run: 'npm install'
 
       - name: Build step
-        env:
-          VITE_NOTES_API_URL: ${{ secrets.VITE_NOTES_API_URL }}
         run: 'npm run build'
 
       - name: Upload to Deno Deploy
