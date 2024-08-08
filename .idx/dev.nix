@@ -19,6 +19,7 @@
       "rangav.vscode-thunder-client"
       "formulahendry.auto-rename-tag"
       "formulahendry.auto-close-tag"
+      "bradlc.vscode-tailwindcss"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file

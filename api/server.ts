@@ -17,8 +17,31 @@ async function handler(request: Request): Promise<Response> {
 	// generate a uique id to represent request
 	const requestId = crypto.randomUUID()
 
-	return await asyncLocalStorage.run({ user, requestId }, () => {
+	const response = await asyncLocalStorage.run({ user, requestId }, () => {
 		return matchRoute(request)
 	})
+
+	// Set CORS headers
+	response.headers.set('Access-Control-Allow-Origin', '*') // Allow all origins. Replace with your specific origin if needed.
+	response.headers.set(
+		'Access-Control-Allow-Methods',
+		'GET, POST, PUT, DELETE, OPTIONS',
+	)
+	response.headers.set(
+		'Access-Control-Allow-Headers',
+		'Content-Type, Authorization, X-User',
+	)
+	response.headers.set('Access-Control-Allow-Credentials', 'true')
+
+	// Handle preflight requests
+	if (request.method === 'OPTIONS') {
+		return new Response(null, {
+			status: 204,
+			headers: response.headers,
+		})
+	}
+
+	return response
 }
+
 Deno.serve(handler)
