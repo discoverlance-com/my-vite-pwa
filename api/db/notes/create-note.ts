@@ -38,6 +38,7 @@ export const createUserNote = async (request: Request) => {
 		return new Response(
 			JSON.stringify({
 				errors: error.formErrors.fieldErrors,
+				message: 'Validation error'
 			}),
 			{
 				status: 422,

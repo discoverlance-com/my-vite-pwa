@@ -5,7 +5,52 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-	plugins: [react(), VitePWA()],
+	plugins: [
+		react(),
+		VitePWA({
+			base: '/',
+			includeAssets: ['vite.svg'],
+			registerType: 'prompt',
+			devOptions: {
+				enabled: true,
+				type: 'module',
+				navigateFallback: 'index.html',
+			},
+			manifest: {
+				theme_color: '#ffffff',
+				display: 'standalone',
+				description: 'Manage your notes',
+				name: 'My Notes',
+				short_name: 'my_notes',
+				icons: [
+					{
+						src: 'pwa-64x64.png',
+						sizes: '64x64',
+						type: 'image/png',
+					},
+					{
+						src: 'pwa-192x192.png',
+						sizes: '192x192',
+						type: 'image/png',
+					},
+					{
+						src: 'pwa-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+					},
+					{
+						src: 'maskable-icon-512x512.png',
+						sizes: '512x512',
+						type: 'image/png',
+						purpose: 'maskable',
+					},
+				],
+			},
+		}),
+	],
+	server: {
+		cors: true,
+	},
 	resolve: {
 		alias: {
 			'@': path.resolve(__dirname, './src'),

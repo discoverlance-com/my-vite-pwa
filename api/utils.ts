@@ -6,7 +6,9 @@ export const asyncLocalStorage = new AsyncLocalStorage<{
 }>()
 
 export const getRequestUser = (request: Request) => {
-	const user = request.headers.get('X-User')
+	const url = new URL(request.url)
+	const user = url.searchParams.get('user')
+	// const user = request.headers.get('X-User')
 
 	return user
 }
