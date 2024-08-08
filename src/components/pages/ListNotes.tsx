@@ -10,9 +10,43 @@ import { Button } from '@/components/ui/button'
 import { CreateNote } from './CreateNote'
 import { useNotesStore } from '@/stores/notes'
 import { Skeleton } from '../ui/skeleton'
+import { toast } from 'sonner'
+import ky, { HTTPError } from 'ky'
+import { useLocalStorage } from 'usehooks-ts'
+import { useCallback } from 'react'
 
 export const ListNotes = () => {
-	const { loading, notes } = useNotesStore()
+	const { loading, notes, loadNotes } = useNotesStore()
+	const [userId] = useLocalStorage<string | null>('userId', null)
+
+	const deleteNote = useCallback(
+		async (id: string) => {
+			try {
+				await ky.post(
+					`${
+						import.meta.env.VITE_NOTES_API_URL
+					}/notes/delete/${id}?user=${userId}`,
+					{
+						credentials: import.meta.env.PROD ? undefined : 'include',
+					},
+				)
+				// refetch the notes
+				toast.info('Note deleted')
+				loadNotes(userId!)
+			} catch (error) {
+				if (error instanceof HTTPError) {
+					const response = await error.response.json<{
+						message: string
+					}>()
+					toast.error(response.message)
+
+					return
+				}
+				toast.error((error as { message: string }).message)
+			}
+		},
+		[userId],
+	)
 
 	return (
 		<div className="mt-8 mx-auto max-w-4xl">
@@ -47,7 +81,12 @@ export const ListNotes = () => {
 
 									<CardFooter className="justify-between">
 										<Button variant="outline">Edit</Button>
-										<Button variant="destructive">Delete</Button>
+										<Button
+											variant="destructive"
+											onClick={() => deleteNote(note.id)}
+										>
+											Delete
+										</Button>
 									</CardFooter>
 								</Card>
 							</li>
