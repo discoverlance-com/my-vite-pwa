@@ -27,11 +27,26 @@ export default defineConfig({
 				globPatterns: ['**/*.{html,js,css,json,png,svg}'],
 			},
 			manifest: {
+				start_url: '/',
+				orientation: 'any',
 				theme_color: '#ffffff',
 				display: 'standalone',
 				description: 'Manage your notes',
 				name: 'My Notes',
 				short_name: 'my_notes',
+				related_applications: [],
+				prefer_related_applications: false,
+				display_override: ['window-controls-overlay'],
+				categories: ['social', 'notes'],
+				shortcuts: [
+					{
+						name: 'Open Notes',
+						short_name: 'Notes',
+						description: 'Open your notes',
+						url: '/',
+						icons: [{ src: 'assets/icons/192x192.png', sizes: '192x192' }],
+					},
+				],
 				icons: [
 					{
 						src: 'pwa-64x64.png',
