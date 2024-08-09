@@ -28,6 +28,7 @@ export default defineConfig({
 			},
 			workbox: {
 				globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+				maximumFileSizeToCacheInBytes: 15000000, // 15 MiB
 			},
 			manifest: {
 				start_url: '/',
