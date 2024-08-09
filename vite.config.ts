@@ -26,6 +26,9 @@ export default defineConfig({
 			injectManifest: {
 				globPatterns: ['**/*.{html,js,css,json,png,svg}'],
 			},
+			workbox: {
+				globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+			},
 			manifest: {
 				start_url: '/',
 				orientation: 'any',
