@@ -6,19 +6,25 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	base: '/',
+	build: {
+		sourcemap: true,
+	},
 	plugins: [
 		// ImportMetaEnvPlugin.vite({
 		// 	example: '.env.example',
 		// }),
 		react(),
 		VitePWA({
-			base: '/',
 			includeAssets: ['vite.svg'],
 			registerType: 'autoUpdate',
 			devOptions: {
 				enabled: true,
 				type: 'module',
 				navigateFallback: 'index.html',
+			},
+			injectManifest: {
+				globPatterns: ['**/*.{html,js,css,json,png,svg}'],
 			},
 			manifest: {
 				theme_color: '#ffffff',
